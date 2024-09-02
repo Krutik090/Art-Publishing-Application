@@ -26,6 +26,10 @@ class LoginController extends Controller
 
             if (Auth::attempt($credentials, $remember)) {
 
+                if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->user_type == 'admin'){
+                    return redirect()->route('admin.dashboard');
+                }
+
                 return redirect()->route('account.dashboard');
             }else{
                 return redirect()->route('account.login')->withErrors('Email or Password incorrect');

@@ -1,55 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Password Reset</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Login &mdash; ArtPublishers</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/modules/fontawesome/css/all.min.css') }}">
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/components.css') }}">
 </head>
-<body class="bg-light">
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <p class="text-muted">
-                        Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-                    </p>
-
-                    <!-- Session Status -->
-                    @if (session('status'))
-                        <div class="alert alert-success mb-4">
-                            {{ session('status') }}
+<body>
+    <div id="app">
+        <section class="section">
+            <div class="container mt-5">
+                <div class="row">
+                    <div
+                        class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                        <div class="login-brand">
+                            <img src="assets/img/stisla-fill.svg" alt="logo" width="100"
+                                class="shadow-light rounded-circle">
                         </div>
-                    @endif
 
-                     <form method="POST" action=""> {{--{{ route('password.email') }} --}}
-                        @csrf
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h4>Forgot Password</h4>
+                            </div>
 
-                        <!-- Email Address -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" required autofocus>
-                            @if ($errors->has('email'))
-                                <div class="text-danger mt-2">
-                                    {{ $errors->first('email') }}
+                            <!-- Session Status -->
+                            @if (session('status'))
+                                <div class="alert alert-success mb-4">
+                                    {{ session('status') }}
                                 </div>
                             @endif
-                        </div>
+                            <form method="GET" action="" class="needs-validation" novalidate="">
+                                @csrf
+                                <div class="form-group mx-3 mb-3">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="text" value="{{ old('email') }}"
+                                        class="form-control" name="email" tabindex="1" required autofocus>
+                                    <div class="invalid-feedback">Please fill out email</div>
 
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">
-                                Email Password Reset Link
-                            </button>
+                                    @if ($errors->has('error'))
+                                        <div class="alert alert-danger mx-3 mb-2 mt-2" style="padding: 8px 45px">
+                                            {{ $errors->first('error') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group mx-3 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                        Email Password Reset Link
+                                    </button>
+                                </div>
+                            </form>
+
                         </div>
-                    </form>
+                    </div>
+
+                    <div class="simple-footer">
+                        Copyright &copy; ArtPublishers {{ date('Y') }}
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- General JS Scripts -->
+    <script src="{{ asset('admin/assets/modules/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/modules/popper.js') }}"></script>
+    <script src="{{ asset('admin/assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/stisla.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
+    <!-- Template JS File -->
+    <script src="{{ asset('admin/assets/js/scripts.js') }}"></script>
 </body>
+
 </html>

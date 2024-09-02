@@ -13,12 +13,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('avatar')->default('/default/avatar.jpeg');
+            $table->string('banner')->default('/default/banner.jpg');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->text('about')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->enum('user_type',['user','admin'])->default('user');
+            $table->text('website')->nullable();
+            $table->text('fb_link')->nullable();
+            $table->text('x_link')->nullable();
+            $table->text('in_link')->nullable();
+            $table->text('wp_link')->nullable();
+            $table->text('insta_link')->nullable();
             $table->timestamps();
         });
 

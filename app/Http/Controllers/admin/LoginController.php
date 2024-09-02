@@ -18,36 +18,34 @@ class LoginController extends Controller
     }
     // This method will authenticate user
     public function authenticate(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        $credentials = $request->only('email', 'password');
-        //$remember = $request->has('remember');
-        if ($validator->passes()) {
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-            if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-
-                if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->user_type != 'admin') {
-
-                    return redirect()->route('admin.login')->withErrors('error', 'You are not Authorized!!');
-                }
-
-                return redirect()->route('admin.dashboard');
-            }
-
-             else {
-                return redirect()->route('admin.login')->withErrors('error', 'Email or Password incorrect');
-            }
-
-        } else {
-            return redirect()->route('admin.login')
-                ->withInput()
-                ->withErrors($validator);
-        }
-
+    if ($validator->fails()) {
+        return redirect()->route('admin.login')
+            ->withInput()
+            ->withErrors($validator);
     }
+
+    // Attempt to authenticate the user as admin
+    if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+
+        // Check if the authenticated user is indeed an admin
+        if (Auth::guard('admin')->user()->user_type === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } else {
+            Auth::guard('admin')->logout();
+            return redirect()->route('admin.error-403');
+            //return redirect()->route('admin.login')->withInput()->withErrors(['error' => 'You are not authorized to access the admin dashboard']);
+        }
+    } else {
+        return redirect()->route('admin.login')->withErrors(['error' => 'Email or Password incorrect'])->withInput();
+    }
+}
+
 
     public function logout()
     {

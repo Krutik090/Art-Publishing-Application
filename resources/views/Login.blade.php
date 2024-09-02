@@ -18,7 +18,7 @@
                                     @if(Session::has('success'))
                                         <div class='alert alert-success'>{{ Session::get('success') }}</div>
                                     @endsession
-                                    @if(Session::has('errir'))
+                                    @if(Session::has('error'))
                                     <div class='alert alert-danger'>{{ Session::get('error') }}</div>
                                 @endsession
                                     <div class="mb-5">
@@ -55,7 +55,6 @@
                                                 Remember me
                                             </label>
                                         </div>
-
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
